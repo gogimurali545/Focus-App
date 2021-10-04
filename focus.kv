@@ -1,0 +1,69 @@
+#: import datetime datetime
+
+MainScreenWidget:
+
+<MainScreenWidget>:
+    spacing: 10
+    LeftGrid:
+        size_hint: 2/3, 1
+    RightGrid:
+
+<LeftGrid>:
+    cols: 3
+    row_force_default: True
+    row_default_height: self.height/15
+
+<RightGrid>:
+    focus_lab: focus_label
+    focus_but: focus_button
+    focus_sli: focus_slider
+    break_lab: break_label
+    break_but: break_button
+    break_sli: break_slider
+    music_but: music_button
+    size_hint: 1/3, 1
+    cols: 1
+    BoxLayout:
+        Label:
+            id: focus_label
+            font_name: 'fonts/Eurostile.ttf'
+            font_size: dp(25)
+
+        ToggleButton:
+            id:focus_button
+            markup: True
+            text: '[b]FOCUS[/b]\n\n' + str(int(focus_slider.value)) + '[i] min[/i]'
+            on_press: self.parent.parent.start_focus()
+            state:'normal'
+            disabled: True if break_button.state == 'down' else False
+    Slider:
+        id: focus_slider
+        min: 0
+        max: 120
+        step: 5
+        value: 25
+
+    BoxLayout:
+        Label:
+            id: break_label
+            font_name: 'fonts/Eurostile.ttf'
+            font_size: dp(25)
+        ToggleButton:
+            id: break_button
+            markup: True
+            text: '[b]BREAK[/b]\n\n' + str(int(break_slider.value)) + '[i] min[/i]'
+            on_press: self.parent.parent.start_break()
+            state:'normal' 
+            disabled: True if focus_button.state == 'down' else False
+    Slider:
+        id: break_slider
+        min: 0
+        max: 45
+        step: 5
+        value: 5
+
+    ToggleButton:
+        id: music_button
+        markup: True
+        text: '[b]MUSIC[/b]' 
+        on_press: self.parent.start_music()
